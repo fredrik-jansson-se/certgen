@@ -1,0 +1,12 @@
+#!/bin/sh -eu
+
+cargo r -- self-signed-ca --san root-ca --ttl=1y root-ca
+cargo r -- signed-cert --ca root-ca.pem --ca-key root-ca.key --san int-ca --is-ca --ttl 1M int-ca
+cargo r -- signed-cert --ca int-ca.pem --ca-key int-ca.key --san server --ttl 1w server
+
+cat root-ca.pem > ca.pem
+cat int-ca.pem >> ca.pem
+
+openssl verify -verbose -CAfile root-ca.pem int-ca.pem
+openssl verify -verbose -CAfile ca.pem server.pem
+
