@@ -1,0 +1,11 @@
+[package]
+name = "certgen"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+clap = { version = "4.5.53", features = ["derive"] }
+humantime = "2.3.0"
+rcgen = { version = "0.14.5", features = ["x509-parser"] }
+time = "0.3.44"
